@@ -10,6 +10,8 @@ const Home = () => {
     const [url, setUrl] = useState('');
 
     const botoAudio = useRef();
+    console.log(botoAudio);
+    
 
     const stylebotton = { height: "500px", min_width: "90px" };
 
@@ -83,12 +85,12 @@ const Home = () => {
     };
 
     const imprimirN = (num) => {
-        const ranN = 'https://assets.breatheco.de/apis/sound' + cancion[num].url;
+        const ranN = 'https://playground.4geeks.com' + cancion[num].url;
         setUrl(ranN);
     };
 
     const imprimirB = (num) => {
-        const ranB = 'https://assets.breatheco.de/apis/sound' + cancion[num].url;
+        const ranB = 'https://playground.4geeks.com' + cancion[num].url;
         setUrl(ranB);
     };
 
@@ -105,12 +107,18 @@ const Home = () => {
         colores(num);
         const selectedSong = cancion.find(song => song.id === num);
         if (selectedSong) {
-            const songUrl = 'https://assets.breatheco.de/apis/sound' + selectedSong.url;
+            const songUrl = 'https://playground.4geeks.com' + selectedSong.url;
             setUrl(songUrl);
         }
     };
 
-  
+    const handlerClickSong = (item) => {
+            setCaso(item.id);
+            cambiar(item.id); 
+            botoAudio.current.src = 'https://playground.4geeks.com' + item.url; 
+            botoAudio.current.play();
+    }
+
     return (
         <div className="text-start" style={fondo}>
             <div className="mt-2">
@@ -125,7 +133,7 @@ const Home = () => {
                                     data-bs-toggle="list"
                                     role="tab"
                                     key={item.id}
-                                    onClick={() => { setCaso(item.id); cambiar(item.id); }}
+                                    onClick={ () => handlerClickSong(item)}
                                     aria-label={`Reproducir ${item.name}`}
                                 >
                                     {item.id + " " + item.name + " -"}
