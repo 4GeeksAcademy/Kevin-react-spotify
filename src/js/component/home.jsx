@@ -10,8 +10,6 @@ const Home = () => {
     const [url, setUrl] = useState('');
 
     const botoAudio = useRef();
-    console.log(botoAudio);
-    
 
     const stylebotton = { height: "500px", min_width: "90px" };
 
@@ -59,48 +57,31 @@ const Home = () => {
         cancion.forEach((item) => {
             const element = document.getElementById(item.id);
             if (element) {
-                element.style.color = "white";
-                element.style.opacity = "100%";
-                element.style.border = "none";
+                element.classList.remove('selected');
             }
         });
     };
 
     const sig = () => {
-        if (caso < cancion.length - 1) {
-            pruebas();
-            setCaso(caso + 1);
-            colores(caso + 1);
-            imprimirN(caso + 1);
+        console.log("Caso:", caso);
+        if (caso < cancion.length) {
+            const newCaso = caso + 1;
+            console.log("Avanzando:", newCaso);
+            setCaso(newCaso);
+            cambiar(newCaso);
         }
     };
-
+    
     const back = () => {
+        console.log("Caso:", caso);
         if (caso > 0) {
-            pruebas();
-            setCaso(caso - 1);
-            colores(caso - 1);
-            imprimirB(caso - 1);
+            const newCaso = caso - 1;
+            console.log("Retrocediendo:", newCaso);
+            setCaso(newCaso);
+            cambiar(newCaso);
         }
     };
-
-    const imprimirN = (num) => {
-        const ranN = 'https://playground.4geeks.com' + cancion[num].url;
-        setUrl(ranN);
-    };
-
-    const imprimirB = (num) => {
-        const ranB = 'https://playground.4geeks.com' + cancion[num].url;
-        setUrl(ranB);
-    };
-
-    const colores = (num) => {
-        const element = document.getElementById(num);
-        if (element) {
-            element.style.opacity = "50%";
-            element.style.border = "3px solid red";
-        }
-    };
+     
 
     const cambiar = (num) => {
         pruebas();
@@ -112,11 +93,18 @@ const Home = () => {
         }
     };
 
+    const colores = (num) => {
+        const element = document.getElementById(num);
+        if (element) {
+            element.classList.add('selected');
+        }
+    };
+
     const handlerClickSong = (item) => {
-            setCaso(item.id);
-            cambiar(item.id); 
-            botoAudio.current.src = 'https://playground.4geeks.com' + item.url; 
-            botoAudio.current.play();
+        setCaso(item.id);
+        cambiar(item.id);
+        botoAudio.current.src = 'https://playground.4geeks.com' + item.url;
+        botoAudio.current.play();
     }
 
     return (
@@ -133,7 +121,7 @@ const Home = () => {
                                     data-bs-toggle="list"
                                     role="tab"
                                     key={item.id}
-                                    onClick={ () => handlerClickSong(item)}
+                                    onClick={() => handlerClickSong(item)}
                                     aria-label={`Reproducir ${item.name}`}
                                 >
                                     {item.id + " " + item.name + " -"}
@@ -155,6 +143,5 @@ const Home = () => {
         </div>
     );
 };
-
 
 export default Home;

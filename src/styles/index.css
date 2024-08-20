@@ -31,3 +31,8 @@
 .control-button:hover {
     color: lightgray;
 }
+
+.selected {
+    opacity: 50%;
+    border: 3px solid red;
+}
